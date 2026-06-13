@@ -110,4 +110,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    /* =========================================
+       MOBILE MENU TOGGLE
+       ========================================= */
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    const navItems = document.querySelectorAll('.nav-links a');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+
 });
