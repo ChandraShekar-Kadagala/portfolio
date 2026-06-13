@@ -62,52 +62,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       VIDEO HOVER PLAY/PAUSE
+       VIDEO PLAY/PAUSE (HOVER & SCROLL)
        ========================================= */
     const portfolioCards = document.querySelectorAll('.portfolio-card');
+    const isTouchDevice = !window.matchMedia("(pointer: fine)").matches;
+
+    // For touch devices, use Intersection Observer to play when visible
+    let videoObserver;
+    if (isTouchDevice) {
+        videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target.querySelector('video');
+                if (video) {
+                    if (entry.isIntersecting) {
+                        let playPromise = video.play();
+                        if (playPromise !== undefined) playPromise.catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+    }
 
     portfolioCards.forEach(card => {
         const video = card.querySelector('video');
         
         if(video) {
-            // Ensure video is paused initially
-            video.pause();
+            video.pause(); // Ensure paused initially
 
-            card.addEventListener('mouseenter', () => {
-                // Play video on hover
-                let playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log("Auto-play prevented", error);
-                    });
-                }
-            });
-
-            card.addEventListener('mouseleave', () => {
-                // Pause video and reset to start when mouse leaves
-                video.pause();
-                // Optional: reset time to 0
-                // video.currentTime = 0; 
-            });
-        }
-    });
-
-    /* =========================================
-       SMOOTH SCROLL FOR ANCHOR LINKS
-       ========================================= */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
+            if (!isTouchDevice) {
+                // Desktop: Play on hover
+                card.addEventListener('mouseenter', () => {
+                    let playPromise = video.play();
+                    if (playPromise !== undefined) playPromise.catch(() => {});
                 });
+
+                card.addEventListener('mouseleave', () => {
+                    video.pause();
+                });
+            } else {
+                // Mobile: Play when 50% visible in viewport
+                videoObserver.observe(card);
             }
-        });
+        }
     });
 
     /* =========================================
@@ -118,14 +116,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('.nav-links a');
 
     if (menuToggle) {
+        const icon = menuToggle.querySelector('i');
+        
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.replace('ph-list', 'ph-x');
+            } else {
+                icon.classList.replace('ph-x', 'ph-list');
+            }
         });
 
         // Close menu when a link is clicked
         navItems.forEach(item => {
             item.addEventListener('click', () => {
                 navLinks.classList.remove('active');
+                icon.classList.replace('ph-x', 'ph-list');
             });
         });
     }
