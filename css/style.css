@@ -848,6 +848,239 @@ em {
 }
 
 /* =========================================
+   MULTI-PAGE NEW SECTIONS
+   ========================================= */
+
+/* Transformation Path */
+.transformation-path {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.path-step {
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+}
+.path-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+    box-shadow: var(--shadow-soft);
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+.path-step.active .path-icon {
+    background: var(--accent);
+    color: var(--white);
+    box-shadow: var(--shadow-hover);
+    transform: scale(1.1);
+}
+.path-step h4 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+.path-arrow {
+    font-size: 1.5rem;
+    color: var(--border-light);
+}
+
+/* Workflow Timeline */
+.workflow-timeline {
+    max-width: 800px;
+    margin: 4rem auto 0;
+}
+.workflow-item {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+.workflow-item:last-child {
+    margin-bottom: 0;
+}
+.workflow-number {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--border-light);
+    font-weight: 600;
+    line-height: 1;
+}
+.workflow-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.workflow-content p {
+    color: var(--text-muted);
+}
+
+/* Industry Grid */
+.industry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 4rem;
+}
+.industry-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+}
+.industry-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+.industry-card h3 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Stack Grid */
+.stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+.stack-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+}
+.stack-card:hover {
+    transform: translateX(10px);
+}
+.stack-icon {
+    font-size: 2.5rem;
+    color: var(--accent);
+}
+.stack-info h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+.stack-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Why Grid */
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+.why-card {
+    background: var(--bg-main);
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+}
+.why-icon {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+.why-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+.why-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Onboarding Grid */
+.onboarding-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-top: 2rem;
+}
+.onboarding-step {
+    position: relative;
+    padding-top: 3rem;
+}
+.step-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    color: var(--border-light);
+    line-height: 0.8;
+    z-index: -1;
+}
+.onboarding-step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.onboarding-step p {
+    color: var(--text-muted);
+}
+
+/* FAQs */
+.faq-container {
+    max-width: 800px;
+    margin: 4rem auto 0;
+}
+.faq-item {
+    background: var(--white);
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+.faq-item summary {
+    padding: 1.5rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+}
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+.faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+.faq-item[open] summary::after {
+    content: '-';
+}
+.faq-content {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-light);
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+}
+
+/* =========================================
    ANIMATIONS & REVEALS
    ========================================= */
 .reveal-up {
@@ -908,6 +1141,16 @@ em {
         font-size: 20vw;
         top: 0;
         transform: none;
+    }
+    
+    .transformation-path {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .path-arrow {
+        transform: rotate(90deg);
+        margin: 1rem 0;
     }
 
     .menu-toggle {
