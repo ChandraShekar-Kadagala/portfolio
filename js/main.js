@@ -61,52 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealOnScroll.observe(el);
     });
 
-    /* =========================================
-       VIDEO PLAY/PAUSE (HOVER & SCROLL)
-       ========================================= */
-    const portfolioCards = document.querySelectorAll('.portfolio-card');
-    const isTouchDevice = !window.matchMedia("(pointer: fine)").matches;
-
-    // For touch devices, use Intersection Observer to play when visible
-    let videoObserver;
-    if (isTouchDevice) {
-        videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target.querySelector('video');
-                if (video) {
-                    if (entry.isIntersecting) {
-                        let playPromise = video.play();
-                        if (playPromise !== undefined) playPromise.catch(() => {});
-                    } else {
-                        video.pause();
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-    }
-
-    portfolioCards.forEach(card => {
-        const video = card.querySelector('video');
-        
-        if(video) {
-            video.pause(); // Ensure paused initially
-
-            if (!isTouchDevice) {
-                // Desktop: Play on hover
-                card.addEventListener('mouseenter', () => {
-                    let playPromise = video.play();
-                    if (playPromise !== undefined) playPromise.catch(() => {});
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    video.pause();
-                });
-            } else {
-                // Mobile: Play when 50% visible in viewport
-                videoObserver.observe(card);
-            }
-        }
-    });
+    // Video auto-play is now handled natively via the 'autoplay muted loop playsinline' HTML attributes.
 
     /* =========================================
        MOBILE MENU TOGGLE
