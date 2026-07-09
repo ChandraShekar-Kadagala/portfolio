@@ -62,26 +62,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       VIDEO MUTE/UNMUTE ON CLICK
+       VIDEO PLAY/PAUSE & MUTE CONTROLS
        ========================================= */
     const videoContainers = document.querySelectorAll('.video-container');
     
     videoContainers.forEach(container => {
         const video = container.querySelector('video');
-        const playIndicator = container.querySelector('.play-indicator i');
+        const playIndicator = container.querySelector('.play-indicator');
+        const playIcon = container.querySelector('.play-indicator i');
+        const muteIndicator = container.querySelector('.mute-indicator');
+        const muteIcon = container.querySelector('.mute-indicator i');
         
-        if (video && playIndicator) {
-            container.addEventListener('click', () => {
-                // Toggle mute state
-                video.muted = !video.muted;
+        if (video) {
+            // Handle Play/Pause when clicking the video or the center play indicator
+            const togglePlay = (e) => {
+                // Prevent mute button clicks from triggering play/pause
+                if (e.target.closest('.mute-indicator')) return;
                 
-                // Update icon
-                if (video.muted) {
-                    playIndicator.className = 'ph-fill ph-speaker-slash';
+                if (video.paused) {
+                    video.play();
+                    playIcon.className = 'ph-fill ph-pause';
                 } else {
-                    playIndicator.className = 'ph-fill ph-speaker-high';
+                    video.pause();
+                    playIcon.className = 'ph-fill ph-play';
                 }
-            });
+            };
+            
+            container.addEventListener('click', togglePlay);
+            
+            // Handle Mute/Unmute
+            if (muteIndicator) {
+                muteIndicator.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent triggering togglePlay
+                    video.muted = !video.muted;
+                    
+                    if (video.muted) {
+                        muteIcon.className = 'ph-fill ph-speaker-slash';
+                    } else {
+                        muteIcon.className = 'ph-fill ph-speaker-high';
+                    }
+                });
+            }
         }
     });
 
