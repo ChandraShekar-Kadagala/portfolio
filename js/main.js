@@ -61,7 +61,29 @@ document.addEventListener('DOMContentLoaded', () => {
         revealOnScroll.observe(el);
     });
 
-    // Video auto-play is now handled natively via the 'autoplay muted loop playsinline' HTML attributes.
+    /* =========================================
+       VIDEO MUTE/UNMUTE ON CLICK
+       ========================================= */
+    const videoContainers = document.querySelectorAll('.video-container');
+    
+    videoContainers.forEach(container => {
+        const video = container.querySelector('video');
+        const playIndicator = container.querySelector('.play-indicator i');
+        
+        if (video && playIndicator) {
+            container.addEventListener('click', () => {
+                // Toggle mute state
+                video.muted = !video.muted;
+                
+                // Update icon
+                if (video.muted) {
+                    playIndicator.className = 'ph-fill ph-speaker-slash';
+                } else {
+                    playIndicator.className = 'ph-fill ph-speaker-high';
+                }
+            });
+        }
+    });
 
     /* =========================================
        MOBILE MENU TOGGLE
